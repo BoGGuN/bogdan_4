@@ -1,6 +1,7 @@
 # Create your models here.
 
 from django.db import models
+from django.core.validators import MinValueValidator
 
 class Profile(models.Model):
     name = models.CharField("Имя", max_length=255)
@@ -160,6 +161,11 @@ class Item(models.Model):
     name = models.CharField("Название", max_length=255, blank=False)
     created_at = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
     type=models.CharField(choices=TYPE_CHOISES, default="default", blank=True, max_length=255)
+    price = models.FloatField(
+        "Цена",
+        validators=[MinValueValidator(0.0)],
+        default=0.0
+        )
 
     class Meta:
         verbose_name="Вещь"
